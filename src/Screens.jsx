@@ -1,7 +1,16 @@
 import { useState } from "react";
 import confetti from "canvas-confetti";
 import * as icons from "react-icons/gi";
-import { Box, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  VStack,
+  Spacer,
+  Text,
+  Grid,
+  HStack,
+} from "@chakra-ui/react";
+
 import { Tile } from "./Tile";
 
 export const possibleTileContents = [
@@ -19,8 +28,46 @@ export const possibleTileContents = [
 
 export function StartScreen({ start }) {
   return (
-    <Box>
-      <Button onClick={start}>Play</Button>
+    <Box
+      h="380px"
+      w="380px"
+      bg="teal.50"
+      borderRadius="12px"
+      my="80px"
+      mx="auto"
+    >
+      <VStack
+        spacing="24px"
+        m="auto"
+        h="380px"
+        color="teal.500"
+        fontWeight="bold"
+        fontSize="4xl"
+        marginBottom="20px"
+      >
+        <Spacer />
+        <Text>Memory</Text>
+        <Text fontSize="lg" mb="20px" fontWeight="normal">
+          Flip over tiles looking for pairs
+        </Text>
+        <Button
+          onClick={start}
+          color="white"
+          w="130px"
+          h="50px"
+          mb="20px"
+          borderRadius="full"
+          bgGradient="linear(teal.400 30%, teal.500 70%)"
+          _hover={{
+            bgGradient: "linear(teal.500 30%, teal.600 70%)",
+          }}
+          size="lg"
+          boxShadow="2xl"
+        >
+          Play
+        </Button>
+        <Spacer />
+      </VStack>
     </Box>
   );
 }
@@ -106,12 +153,31 @@ export function PlayScreen({ end }) {
 
   return (
     <>
-      <Box>
-        {getTiles(6).map((tile, i) => (
-          <Tile key={i} flip={() => flip(i)} {...tile} />
-        ))}
+      <Box py="40px">
+        <HStack mb="20px" color="green">
+          <Spacer />
+          <Text>Tries</Text>
+          <Text bg="green.200" px="2" borderRadius="5">
+            {tryCount}
+          </Text>
+          <Spacer />
+        </HStack>
+
+        <Grid
+          h="380px"
+          w="380px"
+          bg="green.50"
+          p="10px"
+          borderRadius="12px"
+          m="auto"
+          gap={3}
+          templateColumns="repeat(4, 1fr)"
+        >
+          {getTiles(16).map((tile, i) => (
+            <Tile key={i} flip={() => flip(i)} {...tile} />
+          ))}
+        </Grid>
       </Box>
-      {tryCount}
     </>
   );
 }
